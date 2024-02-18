@@ -1,4 +1,6 @@
 from term_menu.menu import TerminalMenu
+import db.convert
+import db.function
 
 def main():
     options = ["Rechercher", "Tout afficher", "Modifier", "Quitter"]
