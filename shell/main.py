@@ -1,43 +1,31 @@
-import os
 import keyboard
+import os
 
-# Liste des options du menu
-menu = ['Option 1', 'Option 2', 'Option 3', 'Quitter']
+class SelectMenu:
+    def __init__(self, options):
+        self.options = options
+        self.selected = 0
 
-# Index de l'option actuellement sélectionnée
-current_option = 0
+    def display(self):
+        os.system('clear')  # Pour Linux/OS X
+        # os.system('cls')  # Pour Windows
+        for index, option in enumerate(self.options):
+            prefix = '>>' if index == self.selected else ''
+            print(f"{prefix} {index + 1}. {option}")
 
-def display_menu():
-    os.system('cls' if os.name == 'nt' else 'clear')
-    for i, option in enumerate(menu):
-        if i == current_option:
-            print(f'> {option} <')
-        else:
-            print(option)
+    def up(self, e):
+        if self.selected > 0:
+            self.selected -= 1
+        self.display()
 
-def up():
-    global current_option
-    if current_option > 0:
-        current_option -= 1
-    display_menu()
-
-def down():
-    global current_option
-    if current_option < len(menu) - 1:
-        current_option += 1
-    display_menu()
-
-keyboard.add_hotkey('up', up)
-keyboard.add_hotkey('down', down)
-
-# Afficher le menu pour la première fois
-display_menu()
-
-# Boucle principale
-while True:
-    if keyboard.is_pressed('enter'):
-        if current_option == len(menu) - 1:
-            break
-        else:
-            print(f'Vous avez sélectionné {menu[current_option]}')
-            break
+    def down(self, e):
+        if self.selected < len(self.options) - 1:
+            self.selected += 1
+        self.display()
+'''
+menu = SelectMenu(["Option 1", "Option 2", "Option 3"])
+menu.display()
+keyboard.on_press_key('up', menu.up)
+keyboard.on_press_key('down', menu.down)
+keyboard.wait('esc')  # Attendez que l'utilisateur appuie sur 'esc' pour quitter
+'''
