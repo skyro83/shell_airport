@@ -27,7 +27,7 @@ def recherche(database_path, table_name, column_name, value):
 def add_row(database_path, table_name, values):
     conn = sqlite3.connect(database_path)
     cursor = conn.cursor()
-    cursor.execute(f"INSERT INTO {table_name} VALUES {values}")
+    cursor.execute(f"INSERT INTO {table_name} VALUES ({','.join(values)})")
     conn.commit()
     conn.close()
     
